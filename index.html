@@ -2,16 +2,62 @@
 <html>
 <head>
   <title>CFPBConsumerComplaints</title>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.3/dc.min.css">
  
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.3/dc.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.3/dc.js"></script>
 
+  <script type="text/javascript" src="index.js"></script>
 
+  <style>
+    .dc-chart g.row text {
+     fill: black;
+     cursor: pointer;
+    }
+
+  </style>
 </head>
 <body>
 
+  <h1>CFPB Consumer Complaints</h1>
+
+  <p id="intro">
+    The Consumer Financial Protection Bureau (CFPB) is the agency responsible for regulating consumer finance products. They
+    gather complaints from the public and
+    <a href="https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD">publish the data online</a>. This
+    visualizes the data using the dc-js library. Please note that the <b>whole dataset</b> is loaded into your browser so it takes
+    a little time to download and get running. Once loaded then you can slice and dice to your hearts content.
+  </p>
+
+  <!--  -->
+  <div id="cannedFilters">
+    <a href="javascript:filterPNMAC()">PennyMac Only</a>
+    <a href="javascript:dc.filterAll(); dc.renderAll();">Reset</a>
+  </div>
+
+  <!-- Contains a text summary of the filters applied to the charts -->
+  <div id="appliedFilters">
+  </div>
+  
+  <!-- The main chart is the focus of your interest -->
+  <div id="mainCharts">
+    <div id="line-chart-count-by-received">
+      <h2>Complaints by Received Date</h2>
+    </div>
+  </div>
+
+  <!-- The fitler charts are for AdHoc queries and only displayed on 1024px or greater screen resolution -->
+  <div id="filterCharts">
+    
+    <div id="row-chart-count-by-product">
+      <h2>Complaints by Product</h2>
+    </div>
+    <div id="row-chart-count-by-issue">
+      <h2>Complaints by Issue</h2>
+    </div>
+
+  </div>
 
 
 </body>
