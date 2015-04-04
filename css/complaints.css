@@ -1,0 +1,11 @@
+body {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.dc-chart g.row text {
+    fill: black;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1em
+}

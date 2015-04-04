@@ -19,6 +19,7 @@ var data,
 var complaintCountChart,
     complaintsByProductChart,
     complaintsByIssueChart;
+    
 
 var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 
@@ -36,6 +37,8 @@ d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType
 })
 
 var filterToggle = true;
+
+// Only show loans belonging to PennyMac
 function filterPNMAC() {
     if (filterToggle) {
 	companyDim.filter('PennyMac Loan Services, LLC');
@@ -45,6 +48,21 @@ function filterPNMAC() {
     filterToggle = !filterToggle;
     dc.redrawAll();
 }
+
+// Add a toggle to auto scale Y axis on line chart
+var autoScale = false;
+function toggleAutoScale() {
+    autoScale = !autoScale;
+    complaintCountChart.elasticY(autoScale);
+    complaintCountChart.redraw();
+
+    complaintsByProductChart.elasticX(autoScale);
+    complaintsByProductChart.redraw();
+
+    complaintsByIssueChart.elasticX(autoScale);
+    complaintsByIssueChart.redraw();
+}
+
 
 // Initialize the dimensions used for filtering the complaints
 function LoadDimensions() {
@@ -76,13 +94,13 @@ function LoadDimensions() {
     daysToSendDim = facts.dimension(dc.pluck("daysToSend"));
     
     issueDim = facts.dimension(dc.pluck("Issue"));
-    subIssueDim = facts.dimension(dc.pluck("Sub-issue"));
+    //subIssueDim = facts.dimension(dc.pluck("Sub-issue"));
     productDim = facts.dimension(dc.pluck("Product"));
-    subProductDim = facts.dimension(dc.pluck("Sub-product"));
+    //subProductDim = facts.dimension(dc.pluck("Sub-product"));
     stateDim = facts.dimension(dc.pluck("State"));
     submitViaDim = facts.dimension(dc.pluck("Submitted via"));
     timelyDim = facts.dimension(dc.pluck("Timely response?"));
-    zipcodeDim = facts.dimension(dc.pluck("ZIP code"));
+    //zipcodeDim = facts.dimension(dc.pluck("ZIP code"));
 
     return facts;
 }
@@ -108,13 +126,12 @@ function LoadCharts() {
     var minDate = receivedDim.bottom(1)[0].received;
     var maxDate = receivedDim.top(1)[0].received;
 
-    complaintCountChart = dc.lineChart("#line-chart-count-by-received")
+    complaintCountChart = dc.barChart("#line-chart-count-by-received")
 	.dimension(receivedDim)
 	.group(recieveGroup)
+	.yAxisLabel("Number of complaints")
 	.x(d3.time.scale().domain([minDate,maxDate]))
-	.elasticY(true)
-	.brushOn(false)
-	.renderArea(true)
+	.elasticY(autoScale)
 	.width(990)
 	.height(400);
 
@@ -123,16 +140,28 @@ function LoadCharts() {
     complaintsByProductChart = dc.rowChart('#row-chart-count-by-product')
 	.dimension(productDim)
 	.group(productGroup)
-	.width(900)
-	.height(productDim.group().all().length * 25);
+	.width(440)
+	.height(400)
+	.elasticX(autoScale)
+	.data(function (group) {
+	    return group.top(10);
+	})
+	.ordering(function(d) { return -d.value });
 
     var issueGroup = issueDim.group();
     
     complaintsByIssueChart = dc.rowChart('#row-chart-count-by-issue')
 	.dimension(issueDim)
 	.group(issueGroup)
-	.width(900)
-	.height(issueDim.group().all().length * 25);
+	.width(500)
+	.height(400)
+	.elasticX(autoScale)
+	.data(function (group) {
+	    return group.top(10);
+	})
+	.ordering(function(d) { return -d.value });
+
+
     
     dc.renderAll();
 
