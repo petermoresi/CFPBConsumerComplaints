@@ -46,7 +46,10 @@ function reset() {
     d3.selectAll('input[type="checkbox"]'). property("checked", false);
     companyDim.filter();
     dc.filterAll();
+    turnAutoScale(true);
     dc.renderAll();
+    
+    turnAutoScale(false);
 }
 
 // Only show loans belonging to PennyMac
@@ -64,11 +67,15 @@ function filterPNMAC() {
 var autoScale = false;
 function toggleAutoScale() {
     autoScale = !autoScale;
+    turnAutoScale(autoScale);
+}
+function turnAutoScale(autoScale) {
+
     complaintCountChart.elasticY(autoScale);
     complaintCountChart.redraw();
 
     complaintsByMonthChart.elasticY(autoScale);
-    complaintCountChart.redraw();
+    complaintsByMonthChart.redraw();
     
     complaintsByProductChart.elasticX(autoScale);
     complaintsByProductChart.redraw();
@@ -78,9 +85,6 @@ function toggleAutoScale() {
 
     companyResponseChart.elasticX(autoScale);
     companyResponseChart.redraw();
-
-    
-    
     
 }
 
