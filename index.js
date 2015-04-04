@@ -19,7 +19,8 @@ var data,
 var complaintCountChart,
     companyResponseChart,
     complaintsByProductChart,
-    complaintsByIssueChart;
+    complaintsByIssueChart,
+    complaintsByYearChart, complaintsByMonthChart, complaintsByDisputedChart;
     
 
 var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
@@ -40,6 +41,8 @@ d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType
 var filterToggle = true;
 
 function reset() {
+    autoScale = false;
+    filterToggle = true;
     d3.selectAll('input[type="checkbox"]'). property("checked", false);
     companyDim.filter();
     dc.filterAll();
@@ -64,6 +67,9 @@ function toggleAutoScale() {
     complaintCountChart.elasticY(autoScale);
     complaintCountChart.redraw();
 
+    complaintsByMonthChart.elasticY(autoScale);
+    complaintCountChart.redraw();
+    
     complaintsByProductChart.elasticX(autoScale);
     complaintsByProductChart.redraw();
 
@@ -73,6 +79,7 @@ function toggleAutoScale() {
     companyResponseChart.elasticX(autoScale);
     companyResponseChart.redraw();
 
+    
     
     
 }
@@ -98,7 +105,7 @@ function LoadDimensions() {
     receivedDim = facts.dimension(dc.pluck("received"));
     
     monthDim = facts.dimension(function (d) {
-        return monthNames[d.received.getMonth()];
+        return (d.received.getMonth() + 1).toString();
     });
 
     yearDim = facts.dimension(function (d) {
@@ -146,7 +153,7 @@ function LoadCharts() {
 	.yAxisLabel("Number of complaints")
 	.x(d3.time.scale().domain([minDate,maxDate]))
 	.elasticY(autoScale)
-	.width(600)
+	.width(768)
 	.height(350);
 
     var companyResponseGroup = companyResponseDim.group();
@@ -163,11 +170,11 @@ function LoadCharts() {
     complaintsByProductChart = dc.rowChart('#row-chart-count-by-product')
 	.dimension(productDim)
 	.group(productGroup)
-	.width(440)
-	.height(350)
+	.width(340)
+	.height(350 * 3)
 	.elasticX(autoScale)
 	.data(function (group) {
-	    return group.top(10);
+	    return group.top(30);
 	})
 	.ordering(function(d) { return -d.value });
 
@@ -176,18 +183,57 @@ function LoadCharts() {
     complaintsByIssueChart = dc.rowChart('#row-chart-count-by-issue')
 	.dimension(issueDim)
 	.group(issueGroup)
-	.width(500)
-	.height(350)
+	.width(400)
+	.height(350 * 3)
 	.elasticX(autoScale)
 	.data(function (group) {
-	    return group.top(10);
+	    return group.top(30);
 	})
 	.ordering(function(d) { return -d.value });
 
-
+    var companyGroup = companyDim.group();
     
-    dc.renderAll();
+    complaintsByIssueChart = dc.rowChart('#row-chart-count-by-company')
+	.dimension(companyDim)
+	.group(companyGroup)
+	.width(400)
+	.height(350 * 3)
+	.elasticX(autoScale)
+	.data(function (group) {
+	    return group.top(30);
+	})
+	.ordering(function(d) { return -d.value });
+    
+    
 
+    var yearGroup = yearDim.group();
+
+    complaintsByYearChart = dc.pieChart('#pie-chart-by-year')
+	.dimension(yearDim)
+	.group(yearGroup)
+	.width(250)
+	.height(200);
+
+    var monthGroup = monthDim.group();
+
+    complaintsByMonthChart = dc.barChart('#pie-chart-by-month')
+	.dimension(monthDim)
+	.group(monthGroup)
+	.elasticY(autoScale)
+	.x(d3.scale.linear().domain([1,12]))
+	.width(550)
+	.height(200);
+
+    var disputedGroup = disputedDim.group();
+
+    complaintsByDisputedChart = dc.pieChart('#pie-chart-by-disputed')
+	.dimension(disputedDim)
+	.group(disputedGroup)
+	.width(250)
+	.height(200);
+
+    dc.renderAll();
+    
     
     
 }
