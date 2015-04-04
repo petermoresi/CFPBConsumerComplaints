@@ -33,11 +33,13 @@
 
     <!-- A list of filters for convenience -->
     <div id="cannedFilters" >
-      <a href="javascript:filterPNMAC()">PennyMac Only</a>
-      <a href="javascript:dc.filterAll(); companyDim.filter(); dc.renderAll();">Reset</a>
+      <label>
+	<input onclick="filterPNMAC()" type="checkbox" name="auto-scale-chart-1">PennyMac Only
+      </label>
       <label>
 	<input onclick="toggleAutoScale()" type="checkbox" name="auto-scale-chart-1">Auto Scaling Axis
       </label>
+      <a href="javascript:reset()">Reset</a>
     </div>
 
     <!-- Contains a text summary of the filters applied to the charts -->
@@ -46,6 +48,10 @@
     
     <!-- The main chart is the focus of your interest -->
     <div id="mainCharts" class="section">
+      <div id="pie-chart-company-response">
+	<h2>Company Response</h2>
+      </div>
+
       <div id="line-chart-count-by-received">
 	<h2>Complaints by date</h2>
       </div>

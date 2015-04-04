@@ -17,6 +17,7 @@ var data,
 
 
 var complaintCountChart,
+    companyResponseChart,
     complaintsByProductChart,
     complaintsByIssueChart;
     
@@ -37,6 +38,13 @@ d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType
 })
 
 var filterToggle = true;
+
+function reset() {
+    d3.selectAll('input[type="checkbox"]'). property("checked", false);
+    companyDim.filter();
+    dc.filterAll();
+    dc.renderAll();
+}
 
 // Only show loans belonging to PennyMac
 function filterPNMAC() {
@@ -61,6 +69,12 @@ function toggleAutoScale() {
 
     complaintsByIssueChart.elasticX(autoScale);
     complaintsByIssueChart.redraw();
+
+    companyResponseChart.elasticX(autoScale);
+    companyResponseChart.redraw();
+
+    
+    
 }
 
 
@@ -132,16 +146,25 @@ function LoadCharts() {
 	.yAxisLabel("Number of complaints")
 	.x(d3.time.scale().domain([minDate,maxDate]))
 	.elasticY(autoScale)
-	.width(990)
-	.height(400);
+	.width(600)
+	.height(350);
 
+    var companyResponseGroup = companyResponseDim.group();
+
+    companyResponseChart = dc.rowChart("#pie-chart-company-response")
+	.dimension(companyResponseDim)
+	.group(companyResponseGroup)
+    	.elasticX(autoScale)
+	.width(440)
+	.height(350);
+    
     var productGroup = productDim.group();
     
     complaintsByProductChart = dc.rowChart('#row-chart-count-by-product')
 	.dimension(productDim)
 	.group(productGroup)
 	.width(440)
-	.height(400)
+	.height(350)
 	.elasticX(autoScale)
 	.data(function (group) {
 	    return group.top(10);
@@ -154,7 +177,7 @@ function LoadCharts() {
 	.dimension(issueDim)
 	.group(issueGroup)
 	.width(500)
-	.height(400)
+	.height(350)
 	.elasticX(autoScale)
 	.data(function (group) {
 	    return group.top(10);
