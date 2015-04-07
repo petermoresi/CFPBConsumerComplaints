@@ -95,7 +95,14 @@ function LoadDimensions() {
     // Pre-process the 
     data.forEach(function(row) {
 	row.received = new Date(row["Date received"]);
-	row.sent = new Date(row["Date sent to company"]);	
+	row.sent = new Date(row["Date sent to company"]);
+	delete row["Date received"];
+	delete row["Date sent to company"];
+	delete row["Sub-product"];
+	delete row["Sub-issue"];
+	delete row["Submitted via"];
+	delete row["Complaint ID"];
+	
     });
     
     facts = crossfilter(data);
