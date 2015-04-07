@@ -95,13 +95,11 @@ function LoadDimensions() {
     // Pre-process the 
     data.forEach(function(row) {
 	row.received = new Date(row["Date received"]);
-	row.sent = new Date(row["Date sent to company"]);
-	row.daysToSend = Math.round( (row.sent - row.received) / 86400000); // convert milliseconds to days
+	row.sent = new Date(row["Date sent to company"]);	
     });
     
     facts = crossfilter(data);
    
-    
     companyDim = facts.dimension(dc.pluck('Company'));
     companyResponseDim = facts.dimension(dc.pluck('Company response'));
     disputedDim = facts.dimension(dc.pluck("Consumer disputed?"));
@@ -116,16 +114,10 @@ function LoadDimensions() {
         return d.received.getFullYear();
     });
     
-    daysToSendDim = facts.dimension(dc.pluck("daysToSend"));
     
     issueDim = facts.dimension(dc.pluck("Issue"));
-    //subIssueDim = facts.dimension(dc.pluck("Sub-issue"));
     productDim = facts.dimension(dc.pluck("Product"));
-    //subProductDim = facts.dimension(dc.pluck("Sub-product"));
-    stateDim = facts.dimension(dc.pluck("State"));
-    submitViaDim = facts.dimension(dc.pluck("Submitted via"));
     timelyDim = facts.dimension(dc.pluck("Timely response?"));
-    //zipcodeDim = facts.dimension(dc.pluck("ZIP code"));
 
     return facts;
 }
