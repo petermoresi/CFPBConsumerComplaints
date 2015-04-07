@@ -99,7 +99,9 @@ function LoadDimensions() {
     });
     
     facts = crossfilter(data);
-   
+
+    delete data;
+    
     companyDim = facts.dimension(dc.pluck('Company'));
     companyResponseDim = facts.dimension(dc.pluck('Company response'));
     disputedDim = facts.dimension(dc.pluck("Consumer disputed?"));
