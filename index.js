@@ -47,7 +47,7 @@ function reset() {
     companyDim.filter();
     dc.filterAll();
     turnAutoScale(true);
-    dc.renderAll();
+    dc.redrawAll();
     
     turnAutoScale(false);
 }
@@ -149,6 +149,7 @@ function LoadCharts() {
 	.yAxisLabel("Number of complaints")
 	.x(d3.time.scale().domain([minDate,maxDate]))
 	.elasticY(autoScale)
+	.brushOn(false)
 	.width(580)
 	.height(350);
 
