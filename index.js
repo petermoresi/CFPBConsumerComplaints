@@ -149,7 +149,7 @@ function LoadCharts() {
 	.yAxisLabel("Number of complaints")
 	.x(d3.time.scale().domain([minDate,maxDate]))
 	.elasticY(autoScale)
-	.width(768)
+	.width(580)
 	.height(350);
 
     var companyResponseGroup = companyResponseDim.group();
@@ -158,7 +158,7 @@ function LoadCharts() {
 	.dimension(companyResponseDim)
 	.group(companyResponseGroup)
     	.elasticX(autoScale)
-	.width(440)
+	.width(300)
 	.height(350);
     
     var productGroup = productDim.group();
@@ -166,7 +166,7 @@ function LoadCharts() {
     complaintsByProductChart = dc.rowChart('#row-chart-count-by-product')
 	.dimension(productDim)
 	.group(productGroup)
-	.width(340)
+	.width(300)
 	.height(350 * 3)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -179,7 +179,7 @@ function LoadCharts() {
     complaintsByIssueChart = dc.rowChart('#row-chart-count-by-issue')
 	.dimension(issueDim)
 	.group(issueGroup)
-	.width(400)
+	.width(300)
 	.height(350 * 3)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -192,7 +192,7 @@ function LoadCharts() {
     complaintsByIssueChart = dc.rowChart('#row-chart-count-by-company')
 	.dimension(companyDim)
 	.group(companyGroup)
-	.width(400)
+	.width(300)
 	.height(350 * 3)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -217,7 +217,7 @@ function LoadCharts() {
 	.group(monthGroup)
 	.elasticY(autoScale)
 	.x(d3.scale.linear().domain([1,12]))
-	.width(550)
+	.width(400)
 	.height(200);
 
     var disputedGroup = disputedDim.group();
