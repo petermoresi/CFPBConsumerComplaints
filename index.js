@@ -20,6 +20,7 @@ var complaintCountChart,
     companyResponseChart,
     complaintsByProductChart,
     complaintsByIssueChart,
+    complaintsByCompanyChart,
     complaintsByYearChart, complaintsByMonthChart, complaintsByDisputedChart;
     
 
@@ -36,6 +37,7 @@ d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType
     data = result;
     LoadDimensions();
     LoadCharts();
+    d3.select("#loading").style("display", "none");
 })
 
 var filterToggle = true;
@@ -55,9 +57,9 @@ function reset() {
 // Only show loans belonging to PennyMac
 function filterPNMAC() {
     if (filterToggle) {
-	companyDim.filter('PennyMac Loan Services, LLC');
+	complaintsByCompanyChart.filter(['PennyMac Loan Services, LLC']);
     } else {
-	companyDim.filter();
+	complaintsByCompanyChart.filterAll();
     }
     filterToggle = !filterToggle;
     dc.redrawAll();
@@ -69,6 +71,7 @@ function toggleAutoScale() {
     autoScale = !autoScale;
     turnAutoScale(autoScale);
 }
+
 function turnAutoScale(autoScale) {
 
     complaintCountChart.elasticY(autoScale);
@@ -190,7 +193,7 @@ function LoadCharts() {
 
     var companyGroup = companyDim.group();
     
-    complaintsByIssueChart = dc.rowChart('#row-chart-count-by-company')
+    complaintsByCompanyChart = dc.rowChart('#row-chart-count-by-company')
 	.dimension(companyDim)
 	.group(companyGroup)
 	.width(300)

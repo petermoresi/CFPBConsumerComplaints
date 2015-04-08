@@ -3,16 +3,15 @@
   <head>
 
     <meta charset="utf-8">
-    <title>Charting the CFPB Consumer Complaintsc</title>
+    <title>CFPB Consumer Complaints Dashboard</title>
     <meta name="description" content="Charts for CFPB Consumer Complaints API with d3, crossfilter, dc-js, normalize and skeleton">
     <meta name="author" content="">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" ref="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.3/dc.min.css" rel="stylesheet" type="text/css">
+    <link href="css/base.css" rel="stylesheet" type="text/css">
     <link href="css/complaints.css" rel="stylesheet" type="text/css">
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -24,69 +23,92 @@
 
   </head>
   <body>
-    <h1>Visualizing the CFPB Consumer Complaints Database</h1>
-
-    <p id="intro">
-      The Consumer Financial Protection Bureau (CFPB) is the agency responsible for regulating consumer finance products. They
-      gather complaints from the public and
-      <a href="https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD">publish the data online</a>.     </p>
-
-    <!-- A list of filters for convenience -->
-    <div id="cannedFilters" >
-      <label>
-	<input onclick="filterPNMAC()" type="checkbox" name="auto-scale-chart-1">PennyMac Only
-      </label>
-      <label>
-	<input onclick="toggleAutoScale()" type="checkbox" name="auto-scale-chart-1">Auto Scaling Axis
-      </label>
-      <a href="javascript:reset()">Reset</a>
-    </div>
-
-    <!-- Contains a text summary of the filters applied to the charts -->
-    <div id="appliedFilters">
-    </div>
     
-    <!-- The main chart is the focus of your interest -->
-    <div id="mainCharts" class="section">
-      <div id="pie-chart-company-response">
-	<h2>Company Response</h2>
+    <nav>
+      <img src="img/logo.png" />
+      <h1>CFPB Consumer Complaints Dashboard</h1>
+    </nav>
+
+    <main>
+
+      <p id="intro">
+	The Consumer Financial Protection Bureau (CFPB) is the agency responsible for regulating consumer finance products. They
+	gather complaints from the public and
+	<a href="https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD">publish the data online</a>.
+	This project consumes the data and renders a set of charts to slice and dice the data.
+      </p>
+
+      <!-- A list of filters for convenience -->
+      <div id="cannedFilters">
+
+	<div>
+	  <input id="filter-pnmac" onclick="filterPNMAC()" type="checkbox" name="auto-scale-chart-1" class="cmn-toggle cmn-toggle-yes-no">
+          <label for="filter-pnmac" data-on="All Companies" data-off="PennyMac Only"></label>
+	</div>
+
+	<div class="switch">
+	  <input id="toggle-autoscale" onclick="toggleAutoScale()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
+          <label for="toggle-autoscale" data-on="Enable AutoScale" data-off="Disable AutoScale"></label>
+	</div>
+
+	<div class="switch">
+	  <input id="toggle-reset" onclick="javascript:reset()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
+          <label for="toggle-reset" data-on="Reset" data-off="Reset"></label>
+	</div>
+	
       </div>
 
-      <div id="line-chart-count-by-received">
-	<h2>Complaints by date</h2>
+      <!-- Contains a text summary of the filters applied to the charts -->
+      <div id="appliedFilters">
       </div>
-    </div>
-
-    <!-- The fitler charts are for AdHoc queries and only displayed on 1024px or greater screen resolution -->
-    <div id="filterCharts">
-
-      <div id="pie-chart-by-year">
-	<h2>Year</h2>
-      </div>
-
-      <div id="pie-chart-by-month">
-	<h2>Month</h2>
-      </div>
-
-      <div id="pie-chart-by-disputed">
-	<h2>Disputed?</h2>
-      </div>
-
       
-      <div id="row-chart-count-by-product">
-	<h2>Top Products</h2>
-      </div>
-      
-      <div id="row-chart-count-by-issue">
-	<h2>Top Issues</h2>
+      <!-- The main chart is the focus of your interest -->
+      <div id="mainCharts" class="section">
+	<div id="pie-chart-company-response">
+	  <h2>Company Response</h2>
+	</div>
+
+	<div id="line-chart-count-by-received">
+	  <h2>Complaints by date</h2>
+	</div>
       </div>
 
-      <div id="row-chart-count-by-company">
-	<h2>Top Companies</h2>
+      <!-- The fitler charts are for AdHoc queries and only displayed on 1024px or greater screen resolution -->
+      <div id="filterCharts">
+
+	<div id="pie-chart-by-year">
+	  <h2>Year</h2>
+	</div>
+
+	<div id="pie-chart-by-month">
+	  <h2>Month</h2>
+	</div>
+
+	<div id="pie-chart-by-disputed">
+	  <h2>Disputed?</h2>
+	</div>
+
+	
+	<div id="row-chart-count-by-product">
+	  <h2>Top Products</h2>
+	</div>
+	
+	<div id="row-chart-count-by-issue">
+	  <h2>Top Issues</h2>
+	</div>
+
+	<div id="row-chart-count-by-company">
+	  <h2>Top Companies</h2>
+	</div>
+
       </div>
 
+    </main>
+
+    <div id="loading">
+      Loading...<br>
+      <img src="img/loader.gif" />
     </div>
-
 
   </body>
 </html>
