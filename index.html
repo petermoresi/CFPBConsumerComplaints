@@ -40,21 +40,26 @@
 
       <!-- A list of filters for convenience -->
       <div id="cannedFilters">
-
-	<div>
-	  <input id="filter-pnmac" onclick="filterPNMAC()" type="checkbox" name="auto-scale-chart-1" class="cmn-toggle cmn-toggle-yes-no">
-          <label for="filter-pnmac" data-on="All Companies" data-off="PennyMac Only"></label>
-	</div>
-
-	<div class="switch">
-	  <input id="toggle-autoscale" onclick="toggleAutoScale()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
-          <label for="toggle-autoscale" data-on="Disable AutoScale" data-off="Enable AutoScale"></label>
-	</div>
-
-	<div class="switch">
-	  <input id="toggle-reset" onclick="javascript:reset()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
-          <label for="toggle-reset" data-on="Reset" data-off="Reset"></label>
-	</div>
+        <ul>
+          <li>
+          	<div>
+          	  <input id="filter-pnmac" onclick="filterPNMAC()" type="checkbox" name="auto-scale-chart-1" class="cmn-toggle cmn-toggle-yes-no">
+                    <label for="filter-pnmac" data-on="All Companies" data-off="PennyMac Only"></label>
+          	</div>
+          </li>
+          <li>
+          	<div class="switch">
+          	  <input id="toggle-autoscale" onclick="toggleAutoScale()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
+                    <label for="toggle-autoscale" data-on="Disable AutoScale" data-off="Enable AutoScale"></label>
+          	</div>
+          </li>
+          <li>
+          	<div class="switch">
+          	  <input id="toggle-reset" onclick="javascript:reset()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
+                    <label for="toggle-reset" data-on="Reset" data-off="Reset"></label>
+          	</div>
+          </li>
+        </ul>
 	
       </div>
 

@@ -49,13 +49,13 @@ main {
     font-size: 1.0em
 }
 
-div#cannedFilters div {
+#cannedFilters div {
     padding-right: 10px;
     vertical-align: middle;    
 }
 
-div#cannedFilters {
-    display: inline-flex;
+#cannedFilters li {
+    display: inline-block;
 }
 
 .cmn-toggle {
