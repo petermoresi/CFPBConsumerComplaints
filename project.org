@@ -1,8 +1,8 @@
 #+TITLE: CFPB Product Doc
 #+OPTIONS: toc:2 num:nil
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="d:/Users/fni/src/org-html-themes/styles/readtheorg/rtd.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/rtd.css"/>
 #+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-#+HTML_HEAD: <script type="text/javascript" src="d:/Users/fni/src/org-html-themes/styles/readtheorg/rtd.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/rtd.js"></script>
 
 This document tracks the checklist of work items for this project.
 
@@ -13,3 +13,11 @@ This document tracks the checklist of work items for this project.
   - [ ] Implement Skeleton
   - [ ] Improve information hierarchy
   - [ ] Add a carousel concept
+
+* Backlog
+
+  Track ideas that are not ready for the [[*Project Checklist]]
+
+* Notes
+
+  Add unstructured notes and ideas to this section
