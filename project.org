@@ -1,4 +1,5 @@
-#+TITLE: CFPB Product Doc
+#+TITLE: CFPB Consumer Complaints Dashboard
+#+AUTHOR: PennyMac VizScape Team
 #+OPTIONS: toc:2 num:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/rtd.css"/>
 #+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
