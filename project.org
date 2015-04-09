@@ -1,12 +1,15 @@
 #+TITLE: CFPB Product Doc
 #+OPTIONS: toc:2 num:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="d:/Users/fni/src/org-html-themes/styles/readtheorg/rtd.css"/>
+#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="d:/Users/fni/src/org-html-themes/styles/readtheorg/rtd.js"></script>
 
 This document tracks the checklist of work items for this project.
 
-* Project Checklist [33%]
-  DEADLINE: <2015-04-17 Fri> SCHEDULED: <2015-04-14 Tue>
-  CLOCK: [2015-04-09 Thu 14:22]--[2015-04-09 Thu 14:25] =>  0:03
+* Project Checklist [40%]
 
-  - [X] Implement Skeleton
+  - [X] Implement intial prototype
+  - [X] Publish to github in PennyMac organization
+  - [ ] Implement Skeleton
   - [ ] Improve information hierarchy
   - [ ] Add a carousel concept
