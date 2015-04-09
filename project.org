@@ -1,23 +1,39 @@
 #+TITLE: CFPB Consumer Complaints Dashboard
 #+AUTHOR: PennyMac VizScape Team
-#+OPTIONS: toc:2 num:nil
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/rtd.css"/>
-#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/rtd.js"></script>
+#+TODOS: TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 
-This document tracks the checklist of work items for this project.
+This document tracks the work for the CFPB Consumer Complaints Dashboard project.
 
-* Project Checklist [40%]
+* Work List [2/3]
+** TODO [#A] Make Page Responsive
+   
+   - [ ] Implement Skeleton as base CSS framework
+   - [ ] Implement page resize event for dynamic chart resizing
 
-  - [X] Implement intial prototype
-  - [X] Publish to github in PennyMac organization
-  - [ ] Implement Skeleton
-  - [ ] Improve information hierarchy
+** TODO [#B] Spike on improving information hierarchy
+   
+   Put together sketches to improve the organization of the charts.
+** DONE Publish to Github Pages under PennyMac organization
+   - State "DONE"       from "TODO"       [2015-04-09 Thu 15:20]
+** DONE Implement inital prototype
+   - State "DONE"       from "TODO"       [2015-04-09 Thu 15:19]
+
+
+
+
+
   - [ ] Add a carousel concept
+  - [ ] Add reset button for all charts that allow filters
 
 * Backlog
 
-  Track ideas that are not ready for the [[*Project Checklist]]
+  Track ideas that are not ready for the [[*Project Checklist][Project Checklist]].
+
+** TODO [#C] Implement Carousel Concept
+
+   The goal is to enable the end user to quickly move through a series of charts in the main chart section. The idea
+   is to implement a carousel that scrolls through the items by sliding them across the screen horizontally.
 
 * Notes
 
