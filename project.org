@@ -3,13 +3,10 @@
 
 This document tracks the checklist of work items for this project.
 
-* Project Checklist [0%]
+* Project Checklist [33%]
   DEADLINE: <2015-04-17 Fri> SCHEDULED: <2015-04-14 Tue>
   CLOCK: [2015-04-09 Thu 14:22]--[2015-04-09 Thu 14:25] =>  0:03
 
-  - [ ] Implement Skeleton
+  - [X] Implement Skeleton
   - [ ] Improve information hierarchy
   - [ ] Add a carousel concept
-  - [ ] Test
-  - [ ] Test
-  - [ ] 
