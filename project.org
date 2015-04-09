@@ -5,7 +5,7 @@
 
 This document tracks the work for the CFPB Consumer Complaints Dashboard project.
 
-* Work List [2/3]
+* Work List [50%]
 ** TODO [#A] Make Page Responsive
    
    - [ ] Implement Skeleton as base CSS framework
