@@ -149,7 +149,7 @@ function LoadEvents() {
 // Initialize the dimensions used for filtering the complaints
 function LoadModel() {
 
-    // Pre-process the 
+    // Pre-process the data
     data.forEach(function(row) {
 	row.received = new Date(row["Date received"]);
 	row.sent = new Date(row["Date sent to company"]);
@@ -321,6 +321,7 @@ function LoadCharts() {
 	.group(monthGroup)
 	.elasticY(autoScale)
 	.x(d3.scale.linear().domain([1,12]))
+        .margins({top: 10, right: 50, bottom: 30, left: 50})
 	.width(310)
 	.height(20*7);
     
