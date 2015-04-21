@@ -9,10 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" ref="stylesheet" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.3/dc.min.css" rel="stylesheet" type="text/css">
-    <link href="css/base.css" rel="stylesheet" type="text/css">
-    <link href="css/complaints.css" rel="stylesheet" type="text/css">
+    <link href="css/app.css" rel="stylesheet" type="text/css">
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
@@ -25,11 +22,13 @@
   <body>
     
     <nav>
-      <img src="img/logo.png" />
+      <div class="logo">
+	<img src="img/logo.png" />
+      </div>
       <h1>CFPB Consumer Complaints Dashboard</h1>
     </nav>
 
-    <main>
+    <section>
 
       <p id="intro">
 	The Consumer Financial Protection Bureau (CFPB) is the agency responsible for regulating consumer finance products. They
@@ -40,27 +39,28 @@
 
       <!-- A list of filters for convenience -->
       <div id="cannedFilters">
-        <ul>
-          <li>
-          	<div>
-          	  <input id="filter-pnmac" onclick="filterPNMAC()" type="checkbox" name="auto-scale-chart-1" class="cmn-toggle cmn-toggle-yes-no">
-                    <label for="filter-pnmac" data-on="All Companies" data-off="PennyMac Only"></label>
-          	</div>
-          </li>
-          <li>
-          	<div class="switch">
-          	  <input id="toggle-autoscale" onclick="toggleAutoScale()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
-                    <label for="toggle-autoscale" data-on="Disable AutoScale" data-off="Enable AutoScale"></label>
-          	</div>
-          </li>
-          <li>
-          	<div class="switch">
-          	  <input id="toggle-reset" onclick="javascript:reset()" type="checkbox" class="cmn-toggle cmn-toggle-yes-no">
-                    <label for="toggle-reset" data-on="Reset" data-off="Reset"></label>
-          	</div>
-          </li>
-        </ul>
-	
+	<div class="button-group">
+	  <label>
+	    <input type="radio" name="filter-companies" value="all">
+	    <span class="button-group-item">All Companies</span>
+	  </label>
+	  <label>
+	    <input type="radio" name="filter-companies" value="pnmac" checked>
+	    <span class="button-group-item">Only PennyMac</span>
+	  </label>
+	</div>
+
+	<div class="button-group">
+	  <label>
+	    <input type="radio" name="filter-products" value="all">
+	    <span class="button-group-item">All Products</span>
+	  </label>
+	  <label>
+	    <input type="radio" name="filter-products" value="Mortgage" checked>
+	    <span class="button-group-item">Only Mortgage</span>
+	  </label>
+	</div>
+	        
       </div>
 
       <!-- Contains a text summary of the filters applied to the charts -->
@@ -69,50 +69,79 @@
       
       <!-- The main chart is the focus of your interest -->
       <div id="mainCharts" class="section">
-	<div id="pie-chart-company-response">
-	  <h2>Company Response</h2>
+
+	
+	<div id="chart-complaint-volume">
+	  <h2>Complaint Volume</h2>
+	  <div class="button-group">
+	    <label>
+	      <input type="radio" name="complaint-volume-level" value="year">
+	      <span class="button-group-item">Year</span>
+	    </label>
+	    <label>
+	      <input type="radio" name="complaint-volume-level" value="month" checked>
+	      <span class="button-group-item">Month</span>
+	    </label>
+	    <label>
+	      <input type="radio" name="complaint-volume-level" value="day">
+	      <span class="button-group-item">Day</span>
+	    </label>
+	  </div>
+  
 	</div>
 
-	<div id="line-chart-count-by-received">
-	  <h2>Complaints by date</h2>
+	<div id="chart-by-state">
+	  <h2>Complaint Volume By State</h2>
 	</div>
+	
       </div>
 
       <!-- The fitler charts are for AdHoc queries and only displayed on 1024px or greater screen resolution -->
       <div id="filterCharts">
-
-	<div id="pie-chart-by-year">
-	  <h2>Year</h2>
-	</div>
-
-	<div id="pie-chart-by-month">
-	  <h2>Month</h2>
-	</div>
-
-	<div id="pie-chart-by-disputed">
-	  <h2>Disputed?</h2>
-	</div>
-
 	
-	<div id="row-chart-count-by-product">
-	  <h2>Top Products</h2>
-	</div>
-	
-	<div id="row-chart-count-by-issue">
-	  <h2>Top Issues</h2>
-	</div>
-
 	<div id="row-chart-count-by-company">
 	  <h2>Top Companies</h2>
+	</div>
+		
+	<div id="chart-by-product">
+	  <h2>Top 7 Products</h2>
+	</div>
+
+	<div id="chart-by-sub-product">
+	  <h2>Top 7 Sub Products</h2>
+	</div>
+	
+	<div id="chart-by-issue">
+	  <h2>Top 7 Issues</h2>
+	</div>
+
+	<div id="chart-by-sub-issue">
+	  <h2>Top 7 Sub Issues</h2>
+	</div>
+
+	<div id="chart-company-response">
+	  <h2>Company Response</h2>
+	</div>
+	
+	<div id="chart-by-month">
+	  <h2>Volume by Month</h2>
+	</div>
+
+	<div id="chart-by-disputed">
+	  <h2>Disputed?</h2>
 	</div>
 
       </div>
 
-    </main>
+    </section>
 
     <div id="loading">
       Loading...<br>
       <img src="img/loader.gif" />
+      <br/>
+      <br/>
+      <br/>      
+      <strong>An Open Source project sponsored by</strong><br/><img src="img/logo.png" />
     </div>
 
   </body>

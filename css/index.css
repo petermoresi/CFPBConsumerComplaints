@@ -1,0 +1,30 @@
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+.chart-link li {
+    border: 2px #EAEDF1 solid;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 10px;
+    height: 120px;
+    list-style: none;
+}
+
+.chart-link {
+    font-size: 1.7em;
+}
+
+.chart-link:hover {
+    font-size: 1.7em;
+    text-decoration: none;
+}
+
+.chart-link img {
+    height: 80px;
+    margin-right: 10px
+}
+
+.chart-link i {
+    margin-top: 22px
+}

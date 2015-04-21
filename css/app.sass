@@ -1,0 +1,54 @@
+@import bourbon/bourbon
+@import grid-settings
+@import neat/neat
+@import normalize
+@import dc
+@import theme
+
+
+nav
+  +outer-container
+  .logo
+    float: right
+    margin-top: 10px
+  h1
+    +span-columns(10)
+
+#resetAll
+  margin-left: 10px
+  float: right
+  +button
+    
+section
+  +outer-container
+
+  .toolbar
+    +span-columns(12)
+    height: 40px
+
+  .main
+    +span-columns(12)
+    div
+      padding: 10px
+      +span-columns(4)
+      +media($tablet)
+        +span-columns(8)
+
+      +media($mobile)
+        +span-columns(4)
+
+  .filters
+    +span-columns(12)
+    div
+      +span-columns(4)
+      h4
+        float: left
+      a
+        float: left
+        margin-left: 7px
+        margin-top: 20px
+      +media($tablet)
+        +span-columns(8)
+
+      +media($mobile)
+        +span-columns(4)

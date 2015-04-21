@@ -1,6 +1,6 @@
 #+TITLE: CFPB Consumer Complaints Dashboard
 #+AUTHOR: PennyMac VizScape Team
-#+TODOS: TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)
+#+TODO: TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 
 This document tracks the work for the CFPB Consumer Complaints Dashboard project.
@@ -28,7 +28,7 @@ This document tracks the work for the CFPB Consumer Complaints Dashboard project
 
 * Backlog
 
-  Track ideas that are not ready for the [[*Project Checklist][Project Checklist]].
+  Track ideas that are not ready for the [[*Work List][Work List]].
 
 ** TODO [#C] Implement Carousel Concept
 

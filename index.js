@@ -13,18 +13,38 @@ var data,
     stateDim,
     submitViaDim,
     timelyDim,
-    zipcodeDim;
+    zipcodeDim,
+    monthDim,
+    yearDim,
+    yearMonthDim;
+
+var minDate, minYear, maxDate, maxYear;
+
+var recieveGroup,
+    companyGroup,
+    companyResponseGroup,
+    productGroup,
+    issueGroup,
+    disputedGroup,
+    yearGroup,
+    yearMonthGroup,
+    monthGroup;
 
 
 var complaintCountChart,
+    complaintMapChart,
     companyResponseChart,
     complaintsByProductChart,
+    complaintsBySubProductChart,
     complaintsByIssueChart,
+    complaintsBySubIssueChart,
     complaintsByCompanyChart,
-    complaintsByYearChart, complaintsByMonthChart, complaintsByDisputedChart;
+    complaintsByMonthChart,
+    complaintsByDisputedChart;
     
 
 var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+
 
 function pad(num, size, char) {
     var s = num+"";
@@ -35,44 +55,29 @@ function pad(num, size, char) {
 
 d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD", function(result) {
     data = result;
-    LoadDimensions();
+    LoadEvents();
+    LoadModel();
     LoadCharts();
-    d3.select("#loading").style("display", "none");
 })
 
 var filterToggle = true;
 
 function reset() {
-    autoScale = false;
+    
     filterToggle = true;
     d3.selectAll('input[type="checkbox"]'). property("checked", false);
     companyDim.filter();
     dc.filterAll();
-    turnAutoScale(true);
     dc.redrawAll();
     
-    turnAutoScale(false);
 }
 
-// Only show loans belonging to PennyMac
-function filterPNMAC() {
-    if (filterToggle) {
-	complaintsByCompanyChart.filter(['PennyMac Loan Services, LLC']);
-    } else {
-	complaintsByCompanyChart.filterAll();
-    }
-    filterToggle = !filterToggle;
-    dc.redrawAll();
-}
+
 
 // Add a toggle to auto scale Y axis on line chart
-var autoScale = false;
+var autoScale = true;
 function toggleAutoScale() {
     autoScale = !autoScale;
-    turnAutoScale(autoScale);
-}
-
-function turnAutoScale(autoScale) {
 
     complaintCountChart.elasticY(autoScale);
     complaintCountChart.redraw();
@@ -88,17 +93,66 @@ function turnAutoScale(autoScale) {
 
     companyResponseChart.elasticX(autoScale);
     companyResponseChart.redraw();
-    
 }
 
 
+function LoadEvents() {
+
+    d3.selectAll('input[name="filter-companies"]')
+	.on('click', function() {
+	    if (this.value === "pnmac") {
+		complaintsByCompanyChart.filter(['PennyMac Loan Services, LLC']);
+	    } else {
+		complaintsByCompanyChart.filterAll();
+	    }
+	    dc.redrawAll();
+	});
+
+    d3.selectAll('input[name="filter-products"]')
+	.on('click', function() {
+	    if (this.value === "all") {
+		complaintsByProductChart.filterAll();
+	    } else {
+		complaintsByProductChart.filter([this.value]);
+	    }
+	    dc.redrawAll();
+	});
+
+    
+    d3.selectAll('input[name="complaint-volume-level"]')
+	.on('click', function() {
+	    switch(this.value) {
+	    case "year":
+		complaintCountChart
+		    .dimension(yearDim)
+		    .group(yearGroup);
+		break;
+	    case "month":
+		complaintCountChart
+		    .dimension(yearMonthDim)
+		    .group(yearMonthGroup);
+		break;
+	    case "day":
+		complaintCountChart
+		    .dimension(receivedDim)
+		    .group(recieveGroup)
+		    .x(d3.time.scale().domain([minDate,maxDate]))
+		break;
+	    }
+	    
+	    complaintCountChart.redraw();
+	    
+	});
+}
+
 // Initialize the dimensions used for filtering the complaints
-function LoadDimensions() {
+function LoadModel() {
 
     // Pre-process the 
     data.forEach(function(row) {
 	row.received = new Date(row["Date received"]);
-	row.sent = new Date(row["Date sent to company"]);	
+	row.sent = new Date(row["Date sent to company"]);
+	row["Sub-issue"] = row["Sub-issue"] === "" ? "Not specified" : row["Sub-issue"];
     });
     
     facts = crossfilter(data);
@@ -114,13 +168,38 @@ function LoadDimensions() {
     });
 
     yearDim = facts.dimension(function (d) {
-        return d.received.getFullYear();
+        return new Date(d.received.getFullYear(), 1, 1 );
     });
-    
+
+    yearMonthDim = facts.dimension(function (d) {
+        return new Date(d.received.getFullYear(), d.received.getMonth(), 1 );
+    });
+
+    stateDim = facts.dimension(dc.pluck("State"));
     
     issueDim = facts.dimension(dc.pluck("Issue"));
+    subIssueDim = facts.dimension(dc.pluck("Sub-issue"));
     productDim = facts.dimension(dc.pluck("Product"));
+    subProductDim = facts.dimension(dc.pluck("Sub-product"));
     timelyDim = facts.dimension(dc.pluck("Timely response?"));
+
+    minDate = receivedDim.bottom(1)[0].received;
+    minYear = minDate.getFullYear();
+    maxDate = receivedDim.top(1)[0].received;
+    maxYear = maxDate.getFullYear();
+
+    recieveGroup		= receivedDim.group();
+    companyResponseGroup	= companyResponseDim.group();
+    productGroup		= productDim.group();
+    subProductGroup		= subProductDim.group();
+    issueGroup			= issueDim.group();
+    subIssueGroup		= subIssueDim.group();
+    companyGroup		= companyDim.group();    
+    yearGroup			= yearDim.group();
+    yearMonthGroup		= yearMonthDim.group();
+    monthGroup			= monthDim.group();
+    disputedGroup		= disputedDim.group();
+    stateGroup                  = stateDim.group();
 
     return facts;
 }
@@ -129,111 +208,147 @@ function LoadDimensions() {
 // load the charts into some spiffy looking charts
 function LoadCharts() {
 
-    /* Charts
-       ==========================================
-       1. Line chart of complaint count by received  (Main chart)
-       2. GEO Choropleth with complaint count
-       3. Pie chart of timely response?
-       4. Bar chart of days to send complaint to company
-       5. Row chart of complaint count by product
-       6. Top complaints by company
-       7. Top complaints by state
-       8. Top complaints by issue
-       9. Filtered/Total Counts
-    */
 
-    var recieveGroup = receivedDim.group();
-    var minDate = receivedDim.bottom(1)[0].received;
-    var maxDate = receivedDim.top(1)[0].received;
-
-    complaintCountChart = dc.barChart("#line-chart-count-by-received")
-	.dimension(receivedDim)
-	.group(recieveGroup)
-	.yAxisLabel("Number of complaints")
+    // Show Complaint Volume (Default to by month)
+    complaintCountChart = dc.lineChart("#chart-complaint-volume")
+	.dimension(yearMonthDim)
+	.group(yearMonthGroup)
 	.x(d3.time.scale().domain([minDate,maxDate]))
 	.elasticY(autoScale)
+    	.elasticX(autoScale)
+	.renderArea(true)
+        .margins({top: 10, right: 50, bottom: 30, left: 50})
 	.brushOn(false)
-	.width(580)
-	.height(350);
+	.width(990)
+	.height(400);
+    
+    complaintCountChart
+	.xAxis()
+	.ticks(maxYear - minYear);
 
-    var companyResponseGroup = companyResponseDim.group();
+    complaintCountChart.yAxis().ticks(5);
 
-    companyResponseChart = dc.rowChart("#pie-chart-company-response")
+
+    companyResponseChart = dc.rowChart("#chart-company-response")
 	.dimension(companyResponseDim)
 	.group(companyResponseGroup)
+	.data(function (group) {
+	    return group.top(10);
+	})
     	.elasticX(autoScale)
-	.width(300)
-	.height(350);
+	.width(310)
+	.height(40*7)
+    	.xAxis().ticks(5);
     
-    var productGroup = productDim.group();
+
     
-    complaintsByProductChart = dc.rowChart('#row-chart-count-by-product')
-	.dimension(productDim)
+    complaintsByProductChart = dc.rowChart('#chart-by-product');
+
+    complaintsByProductChart.dimension(productDim)
 	.group(productGroup)
-	.width(300)
-	.height(350 * 3)
+	.width(310)
+	.height(40*7)
 	.elasticX(autoScale)
 	.data(function (group) {
-	    return group.top(30);
+	    return group.top(7);
 	})
-	.ordering(function(d) { return -d.value });
+	.ordering(function(d) { return -d.value })
+        .xAxis().ticks(3);
 
-    var issueGroup = issueDim.group();
+    complaintsByProductChart.filter(['Mortgage']);
     
-    complaintsByIssueChart = dc.rowChart('#row-chart-count-by-issue')
-	.dimension(issueDim)
+    complaintsBySubProductChart = dc.rowChart('#chart-by-sub-product');
+
+    complaintsBySubProductChart.dimension(subProductDim)
+	.group(subProductGroup)
+	.width(310)
+	.height(40*7)
+	.elasticX(autoScale)
+	.data(function (group) {
+	    return group.top(7);
+	})
+	.ordering(function(d) { return -d.value })
+        .xAxis().ticks(3);
+
+
+    
+    complaintsByIssueChart = dc.rowChart('#chart-by-issue');
+
+    complaintsByIssueChart.dimension(issueDim)
 	.group(issueGroup)
-	.width(300)
-	.height(350 * 3)
+	.width(310)
+	.height(40*7)
 	.elasticX(autoScale)
 	.data(function (group) {
-	    return group.top(30);
+	    return group.top(7);
 	})
-	.ordering(function(d) { return -d.value });
+	.ordering(function(d) { return -d.value })
+        .xAxis().ticks(3);
 
-    var companyGroup = companyDim.group();
+    complaintsBySubIssueChart = dc.rowChart('#chart-by-sub-issue');
     
-    complaintsByCompanyChart = dc.rowChart('#row-chart-count-by-company')
+    complaintsBySubIssueChart.dimension(subIssueDim)
+	.group(subIssueGroup)
+	.width(310)
+	.height(40*7)
+	.elasticX(autoScale)
+	.data(function (group) {
+	    return group.top(7);
+	})
+	.ordering(function(d) { return -d.value })
+        .xAxis().ticks(3);
+
+    
+    complaintsByCompanyChart = dc.rowChart('#row-chart-count-by-company');
+
+    complaintsByCompanyChart
 	.dimension(companyDim)
 	.group(companyGroup)
-	.width(300)
+	.width(310)
 	.height(350 * 3)
 	.elasticX(autoScale)
 	.data(function (group) {
-	    return group.top(30);
-	})
-	.ordering(function(d) { return -d.value });
+	    return group.top(50);
+	})	.ordering(function(d) { return -d.value })
+        .xAxis().ticks(3);
     
-    
+    complaintsByCompanyChart.filter(['PennyMac Loan Services, LLC']);
 
-    var yearGroup = yearDim.group();
-
-    complaintsByYearChart = dc.pieChart('#pie-chart-by-year')
-	.dimension(yearDim)
-	.group(yearGroup)
-	.width(250)
-	.height(200);
-
-    var monthGroup = monthDim.group();
-
-    complaintsByMonthChart = dc.barChart('#pie-chart-by-month')
+    complaintsByMonthChart = dc.barChart('#chart-by-month');
+    complaintsByMonthChart
 	.dimension(monthDim)
 	.group(monthGroup)
 	.elasticY(autoScale)
 	.x(d3.scale.linear().domain([1,12]))
-	.width(400)
-	.height(200);
-
-    var disputedGroup = disputedDim.group();
-
-    complaintsByDisputedChart = dc.pieChart('#pie-chart-by-disputed')
+	.width(310)
+	.height(20*7);
+    
+    complaintsByDisputedChart = dc.pieChart('#chart-by-disputed')
 	.dimension(disputedDim)
 	.group(disputedGroup)
-	.width(250)
-	.height(200);
+	.width(310)
+	.height(20*7);
 
-    dc.renderAll();
     
-    
-    
+    complaintMapChart = dc.geoChoroplethChart("#chart-by-state");
+
+    d3.json("data/us-states.json", function (statesJson) {
+	complaintMapChart.width(990)
+            .height(500)
+            .dimension(stateDim)
+            .group(stateGroup)
+            .colors(d3.scale.quantize().range(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"]))
+            .colorDomain( [0, 100000] )
+            .colorCalculator(function (d) { return d ? complaintMapChart.colors()(d) : '#ccc'; })
+            .overlayGeoJson(statesJson.features, "state", function (d) {
+                return d.properties.name;
+            })
+            .title(function (d) {
+                return "State: " + d.key + "\nTotal Amount: " + (d.value ? d.value : 0);
+            });
+
+	dc.renderAll();
+	
+	d3.select("#loading").style("display", "none");
+    });
 }
