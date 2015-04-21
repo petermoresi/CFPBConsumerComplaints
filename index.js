@@ -28,6 +28,7 @@ var recieveGroup,
     disputedGroup,
     yearGroup,
     yearMonthGroup,
+    stateGroup,
     monthGroup;
 
 
@@ -337,14 +338,19 @@ function LoadCharts() {
             .height(500)
             .dimension(stateDim)
             .group(stateGroup)
-            .colors(d3.scale.quantize().range(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"]))
-            .colorDomain( [0, 100000] )
+	    .valueAccessor(function(d){
+		// convert to percentage of total
+		return 100 * (d.value / receivedDim.top(Number.POSITIVE_INFINITY).length); 
+	    }) 
+            .colors(d3.scale.quantize().range(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"]
+					     ))
+            .colorDomain( [0, 10] )
             .colorCalculator(function (d) { return d ? complaintMapChart.colors()(d) : '#ccc'; })
             .overlayGeoJson(statesJson.features, "state", function (d) {
                 return d.properties.name;
             })
             .title(function (d) {
-                return "State: " + d.key + "\nTotal Amount: " + (d.value ? d.value : 0);
+                return "State: " + d.key + "\nPercentage: " + (d.value ? d.value.toFixed(1) : 0)  + "%";
             });
 
 	dc.renderAll();
