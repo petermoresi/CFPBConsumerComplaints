@@ -35,7 +35,7 @@ var recieveGroup,
 
 
 var complaintCountChart,
-    complaintMapChart,
+    //complaintMapChart,
     companyResponseChart,
     complaintsByProductChart,
     complaintsBySubProductChart,
@@ -43,6 +43,7 @@ var complaintCountChart,
     complaintsBySubIssueChart,
     complaintsByCompanyChart,
     complaintsByMonthChart,
+    complaintsByYearChart,
     complaintsByDisputedChart;
     
 
@@ -56,8 +57,29 @@ function pad(num, size, char) {
     return s;
 }
 
-d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD", function(result) {
+// resize non-sense
+function resizeChart(chart) {
+    var offset = $('#' + chart.anchorName())[0].offsetWidth;
+    chart.width(offset);
+}
+
+function resizeAll() {
+    resizeChart( complaintCountChart );
+    //resizeChart( complaintMapChart );
+    resizeChart( companyResponseChart );
+    resizeChart( complaintsByProductChart );
+    resizeChart( complaintsBySubProductChart );
+    resizeChart( complaintsByIssueChart );
+    resizeChart( complaintsBySubIssueChart );
+    resizeChart( complaintsByCompanyChart );
+    resizeChart( complaintsByMonthChart );
+    resizeChart( complaintsByYearChart );
+    resizeChart( complaintsByDisputedChart );
+    dc.renderAll();
+}
+
 //d3.csv("data/Consumer_Complaints.csv", function(result) {
+d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD", function(result) {
     data = result;
     LoadEvents();
     LoadModel();
@@ -170,6 +192,10 @@ function LoadEvents() {
 	    complaintCountChart.redraw();
 	    
 	});
+
+    window.onresize = function(e) {
+	dc.events.trigger(resizeAll, 300);
+    }
 }
 
 // Initialize the dimensions used for filtering the complaints
@@ -262,7 +288,9 @@ function LoadCharts() {
     complaintCountChart.yAxis().ticks(5);
 
 
-    companyResponseChart = dc.rowChart("#chart-company-response")
+    companyResponseChart = dc.rowChart("#chart-company-response");
+    
+    companyResponseChart
 	.dimension(companyResponseDim)
 	.group(companyResponseGroup)
 	.data(function (group) {
@@ -357,23 +385,25 @@ function LoadCharts() {
 	.width(300)
 	.height(20*7);
 
-    complaintsByDisputedChart = dc.pieChart('#chart-by-year')
-	.dimension(yearDim2)
+    complaintsByYearChart = dc.pieChart('#chart-by-year');
+    
+    complaintsByYearChart.dimension(yearDim2)
 	.group(yearGroup2)
 	.width(300)
 	.height(20*7);
     
-    complaintsByDisputedChart = dc.pieChart('#chart-by-disputed')
-	.dimension(disputedDim)
+    complaintsByDisputedChart = dc.pieChart('#chart-by-disputed');
+    
+    complaintsByDisputedChart.dimension(disputedDim)
 	.group(disputedGroup)
 	.width(300)
 	.height(20*7);
 
-    
+    /*
     complaintMapChart = dc.geoChoroplethChart("#chart-by-state");
 
     d3.json("data/us-states.json", function (statesJson) {
-	complaintMapChart.width(1022)
+	complaintMapChart.width(400)
             .height(500)
             .dimension(stateDim)
             .group(stateGroup)
@@ -392,8 +422,12 @@ function LoadCharts() {
                 return "State: " + d.key + "\nPercentage: " + (d.value ? d.value.toFixed(1) : 0)  + "%";
             });
 
-	dc.renderAll();
+
 	
-	d3.select("#loading").style("display", "none");
+
     });
+    */
+    
+    resizeAll();
+    d3.select("#loading").style("display", "none");
 }

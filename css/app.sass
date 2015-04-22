@@ -26,16 +26,17 @@ section#main
     +span-columns(12)
     height: 40px
 
-  #mainChart
-    +span-columns(12)
-    div
-      padding: 10px
+  #mainCharts
+    +outer-container
+    #chart-complaint-volume
       +span-columns(12)
       +media($tablet)
         +span-columns(8)
 
       +media($mobile)
         +span-columns(4)
+    #chart-by-state
+      display: none
 
   .filters
     +span-columns(12)
@@ -60,7 +61,12 @@ section#main
         +span-columns(12)
         div
           +span-columns(6)
+          +media($tablet)
+            +span-columns(4)
 
+          +media($mobile)
+            +span-columns(4)
+              
       #chart-company-response
         +span-columns(12)
 
@@ -68,6 +74,11 @@ section#main
     +span-columns(12)
     .dc-chart
       +span-columns(4)
+      +media($tablet)
+        +span-columns(8)
+
+      +media($mobile)
+        +span-columns(4)
 
   #footer
     +span-columns(12)
