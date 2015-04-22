@@ -837,84 +837,84 @@ nav {
     cursor: not-allowed;
     opacity: 0.5; }
 
-section {
+section#main {
   max-width: 68em;
   margin-left: auto;
   margin-right: auto; }
-  section::after {
+  section#main::after {
     clear: both;
     content: "";
     display: table; }
-  section .toolbar {
+  section#main .toolbar {
     float: left;
     display: block;
     margin-right: 2.12766%;
     width: 100%;
     height: 40px; }
-    section .toolbar:last-child {
+    section#main .toolbar:last-child {
       margin-right: 0; }
-  section #mainChart {
+  section#main #mainChart {
     float: left;
     display: block;
     margin-right: 2.12766%;
     width: 100%; }
-    section #mainChart:last-child {
+    section#main #mainChart:last-child {
       margin-right: 0; }
-    section #mainChart div {
+    section#main #mainChart div {
       padding: 10px;
       float: left;
       display: block;
       margin-right: 2.12766%;
       width: 100%; }
-      section #mainChart div:last-child {
+      section#main #mainChart div:last-child {
         margin-right: 0; }
       @media screen and (max-width: 768px) {
-        section #mainChart div {
+        section#main #mainChart div {
           float: left;
           display: block;
           margin-right: 3.22581%;
           width: 100%; }
-          section #mainChart div:last-child {
+          section#main #mainChart div:last-child {
             margin-right: 0; } }
       @media screen and (max-width: 480px) {
-        section #mainChart div {
+        section#main #mainChart div {
           float: left;
           display: block;
           margin-right: 6.66667%;
           width: 100%; }
-          section #mainChart div:last-child {
+          section#main #mainChart div:last-child {
             margin-right: 0; } }
-  section .filters {
+  section#main .filters {
     float: left;
     display: block;
     margin-right: 2.12766%;
     width: 100%; }
-    section .filters:last-child {
+    section#main .filters:last-child {
       margin-right: 0; }
-    section .filters #row-chart-count-by-company {
+    section#main .filters #row-chart-count-by-company {
       float: left;
       display: block;
       margin-right: 2.12766%;
       width: 31.91489%; }
-      section .filters #row-chart-count-by-company:last-child {
+      section#main .filters #row-chart-count-by-company:last-child {
         margin-right: 0; }
       @media screen and (max-width: 768px) {
-        section .filters #row-chart-count-by-company {
+        section#main .filters #row-chart-count-by-company {
           float: left;
           display: block;
           margin-right: 3.22581%;
           width: 100%; }
-          section .filters #row-chart-count-by-company:last-child {
+          section#main .filters #row-chart-count-by-company:last-child {
             margin-right: 0; } }
       @media screen and (max-width: 480px) {
-        section .filters #row-chart-count-by-company {
+        section#main .filters #row-chart-count-by-company {
           float: left;
           display: block;
           margin-right: 6.66667%;
           width: 100%; }
-          section .filters #row-chart-count-by-company:last-child {
+          section#main .filters #row-chart-count-by-company:last-child {
             margin-right: 0; } }
-    section .filters #other-filters {
+    section#main .filters #other-filters {
       float: left;
       display: block;
       margin-right: 2.12766%;
@@ -922,62 +922,70 @@ section {
       max-width: 68em;
       margin-left: auto;
       margin-right: auto; }
-      section .filters #other-filters:last-child {
+      section#main .filters #other-filters:last-child {
         margin-right: 0; }
-      section .filters #other-filters::after {
+      section#main .filters #other-filters::after {
         clear: both;
         content: "";
         display: table; }
       @media screen and (max-width: 768px) {
-        section .filters #other-filters {
+        section#main .filters #other-filters {
           float: left;
           display: block;
           margin-right: 3.22581%;
           width: 100%; }
-          section .filters #other-filters:last-child {
+          section#main .filters #other-filters:last-child {
             margin-right: 0; } }
       @media screen and (max-width: 480px) {
-        section .filters #other-filters {
+        section#main .filters #other-filters {
           float: left;
           display: block;
           margin-right: 6.66667%;
           width: 100%; }
-          section .filters #other-filters:last-child {
+          section#main .filters #other-filters:last-child {
             margin-right: 0; } }
-      section .filters #other-filters #productFilters, section .filters #other-filters #issueFilters {
+      section#main .filters #other-filters #productFilters, section#main .filters #other-filters #issueFilters {
         float: left;
         display: block;
         margin-right: 2.12766%;
         width: 100%; }
-        section .filters #other-filters #productFilters:last-child, section .filters #other-filters #issueFilters:last-child {
+        section#main .filters #other-filters #productFilters:last-child, section#main .filters #other-filters #issueFilters:last-child {
           margin-right: 0; }
-        section .filters #other-filters #productFilters div, section .filters #other-filters #issueFilters div {
+        section#main .filters #other-filters #productFilters div, section#main .filters #other-filters #issueFilters div {
           float: left;
           display: block;
           margin-right: 2.12766%;
           width: 48.93617%; }
-          section .filters #other-filters #productFilters div:last-child, section .filters #other-filters #issueFilters div:last-child {
+          section#main .filters #other-filters #productFilters div:last-child, section#main .filters #other-filters #issueFilters div:last-child {
             margin-right: 0; }
-      section .filters #other-filters #chart-company-response {
+      section#main .filters #other-filters #chart-company-response {
         float: left;
         display: block;
         margin-right: 2.12766%;
         width: 100%; }
-        section .filters #other-filters #chart-company-response:last-child {
+        section#main .filters #other-filters #chart-company-response:last-child {
           margin-right: 0; }
-  section #monthYearDisputedFilters {
+  section#main #monthYearDisputedFilters {
     float: left;
     display: block;
     margin-right: 2.12766%;
     width: 100%; }
-    section #monthYearDisputedFilters:last-child {
+    section#main #monthYearDisputedFilters:last-child {
       margin-right: 0; }
-    section #monthYearDisputedFilters .dc-chart {
+    section#main #monthYearDisputedFilters .dc-chart {
       float: left;
       display: block;
       margin-right: 2.12766%;
       width: 31.91489%; }
-      section #monthYearDisputedFilters .dc-chart:last-child {
+      section#main #monthYearDisputedFilters .dc-chart:last-child {
         margin-right: 0; }
+  section#main #footer {
+    float: left;
+    display: block;
+    margin-right: 2.12766%;
+    width: 100%;
+    text-align: center; }
+    section#main #footer:last-child {
+      margin-right: 0; }
 
 /*# sourceMappingURL=app.css.map */
