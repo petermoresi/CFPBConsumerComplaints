@@ -153,6 +153,7 @@ function LoadEvents() {
 	    if (this.value === "all") {
 		complaintsByProductChart.filterAll();
 	    } else {
+		var filters = complaintsByProductChart.filters();
 		if (filters.length === 1 &&
 		    filters[0][0] === this.value) {
 		    return; // hyper user likes to click too much
