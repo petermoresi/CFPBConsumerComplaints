@@ -626,9 +626,6 @@ div.dc-chart {
   text-align: center; }
 
 .dc-chart {
-  margin: 10px;
-  padding: 0 10px 0 0px;
-  background: white;
   border: 1px black solid;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -637,7 +634,8 @@ div.dc-chart {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px; }
+  border-top-left-radius: 5px;
+  margin-top: 10px; }
   .dc-chart h2 {
     text-align: center; }
 
@@ -855,36 +853,36 @@ section {
     height: 40px; }
     section .toolbar:last-child {
       margin-right: 0; }
-  section .main {
+  section #mainChart {
     float: left;
     display: block;
     margin-right: 2.12766%;
     width: 100%; }
-    section .main:last-child {
+    section #mainChart:last-child {
       margin-right: 0; }
-    section .main div {
+    section #mainChart div {
       padding: 10px;
       float: left;
       display: block;
       margin-right: 2.12766%;
-      width: 31.91489%; }
-      section .main div:last-child {
+      width: 100%; }
+      section #mainChart div:last-child {
         margin-right: 0; }
       @media screen and (max-width: 768px) {
-        section .main div {
+        section #mainChart div {
           float: left;
           display: block;
           margin-right: 3.22581%;
           width: 100%; }
-          section .main div:last-child {
+          section #mainChart div:last-child {
             margin-right: 0; } }
       @media screen and (max-width: 480px) {
-        section .main div {
+        section #mainChart div {
           float: left;
           display: block;
           margin-right: 6.66667%;
           width: 100%; }
-          section .main div:last-child {
+          section #mainChart div:last-child {
             margin-right: 0; } }
   section .filters {
     float: left;
@@ -893,34 +891,93 @@ section {
     width: 100%; }
     section .filters:last-child {
       margin-right: 0; }
-    section .filters div {
+    section .filters #row-chart-count-by-company {
       float: left;
       display: block;
       margin-right: 2.12766%;
       width: 31.91489%; }
-      section .filters div:last-child {
+      section .filters #row-chart-count-by-company:last-child {
         margin-right: 0; }
-      section .filters div h4 {
-        float: left; }
-      section .filters div a {
-        float: left;
-        margin-left: 7px;
-        margin-top: 20px; }
       @media screen and (max-width: 768px) {
-        section .filters div {
+        section .filters #row-chart-count-by-company {
           float: left;
           display: block;
           margin-right: 3.22581%;
           width: 100%; }
-          section .filters div:last-child {
+          section .filters #row-chart-count-by-company:last-child {
             margin-right: 0; } }
       @media screen and (max-width: 480px) {
-        section .filters div {
+        section .filters #row-chart-count-by-company {
           float: left;
           display: block;
           margin-right: 6.66667%;
           width: 100%; }
-          section .filters div:last-child {
+          section .filters #row-chart-count-by-company:last-child {
             margin-right: 0; } }
+    section .filters #other-filters {
+      float: left;
+      display: block;
+      margin-right: 2.12766%;
+      width: 65.95745%;
+      max-width: 68em;
+      margin-left: auto;
+      margin-right: auto; }
+      section .filters #other-filters:last-child {
+        margin-right: 0; }
+      section .filters #other-filters::after {
+        clear: both;
+        content: "";
+        display: table; }
+      @media screen and (max-width: 768px) {
+        section .filters #other-filters {
+          float: left;
+          display: block;
+          margin-right: 3.22581%;
+          width: 100%; }
+          section .filters #other-filters:last-child {
+            margin-right: 0; } }
+      @media screen and (max-width: 480px) {
+        section .filters #other-filters {
+          float: left;
+          display: block;
+          margin-right: 6.66667%;
+          width: 100%; }
+          section .filters #other-filters:last-child {
+            margin-right: 0; } }
+      section .filters #other-filters #productFilters, section .filters #other-filters #issueFilters {
+        float: left;
+        display: block;
+        margin-right: 2.12766%;
+        width: 100%; }
+        section .filters #other-filters #productFilters:last-child, section .filters #other-filters #issueFilters:last-child {
+          margin-right: 0; }
+        section .filters #other-filters #productFilters div, section .filters #other-filters #issueFilters div {
+          float: left;
+          display: block;
+          margin-right: 2.12766%;
+          width: 48.93617%; }
+          section .filters #other-filters #productFilters div:last-child, section .filters #other-filters #issueFilters div:last-child {
+            margin-right: 0; }
+      section .filters #other-filters #chart-company-response {
+        float: left;
+        display: block;
+        margin-right: 2.12766%;
+        width: 100%; }
+        section .filters #other-filters #chart-company-response:last-child {
+          margin-right: 0; }
+  section #monthYearDisputedFilters {
+    float: left;
+    display: block;
+    margin-right: 2.12766%;
+    width: 100%; }
+    section #monthYearDisputedFilters:last-child {
+      margin-right: 0; }
+    section #monthYearDisputedFilters .dc-chart {
+      float: left;
+      display: block;
+      margin-right: 2.12766%;
+      width: 31.91489%; }
+      section #monthYearDisputedFilters .dc-chart:last-child {
+        margin-right: 0; }
 
 /*# sourceMappingURL=app.css.map */

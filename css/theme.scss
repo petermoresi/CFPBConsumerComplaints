@@ -10,14 +10,13 @@
 }
 
 .dc-chart {
-    margin: 10px;
-    padding: 0 10px 0 0px;
-    background: white;
     border: 1px black solid;
     @include border-top-radius(5px);	
     @include border-right-radius(5px);	
     @include border-bottom-radius(5px);
     @include border-left-radius(5px);
+
+    margin-top: 10px;
 
     h2 {
 	text-align: center;

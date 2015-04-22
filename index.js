@@ -16,6 +16,7 @@ var data,
     zipcodeDim,
     monthDim,
     yearDim,
+    yearDim2,
     yearMonthDim;
 
 var minDate, minYear, maxDate, maxYear;
@@ -27,6 +28,7 @@ var recieveGroup,
     issueGroup,
     disputedGroup,
     yearGroup,
+    yearGroup2,
     yearMonthGroup,
     stateGroup,
     monthGroup;
@@ -55,6 +57,7 @@ function pad(num, size, char) {
 }
 
 d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD", function(result) {
+//d3.csv("data/Consumer_Complaints.csv", function(result) {
     data = result;
     LoadEvents();
     LoadModel();
@@ -101,11 +104,25 @@ function LoadEvents() {
 
     d3.selectAll('input[name="filter-companies"]')
 	.on('click', function() {
+	    var filters = complaintsByCompanyChart.filters();
 	    if (this.value === "pnmac") {
+
+		if (filters.length === 1 &&
+		    filters[0][0] === this.value) {
+		    return; // hyper user likes to click too much
+		}
+		
+		if (filters.length > 0) {
+		    complaintsByCompanyChart.filterAll();
+		}
+
 		complaintsByCompanyChart.filter(['PennyMac Loan Services, LLC']);
+
+
 	    } else {
 		complaintsByCompanyChart.filterAll();
 	    }
+	    
 	    dc.redrawAll();
 	});
 
@@ -114,6 +131,15 @@ function LoadEvents() {
 	    if (this.value === "all") {
 		complaintsByProductChart.filterAll();
 	    } else {
+		if (filters.length === 1 &&
+		    filters[0][0] === this.value) {
+		    return; // hyper user likes to click too much
+		}
+		
+		if (filters.length > 0) {
+		    complaintsByProductChart.filterAll();
+		}
+		
 		complaintsByProductChart.filter([this.value]);
 	    }
 	    dc.redrawAll();
@@ -172,6 +198,11 @@ function LoadModel() {
         return new Date(d.received.getFullYear(), 1, 1 );
     });
 
+    yearDim2 = facts.dimension(function (d) {
+        return d.received.getFullYear();
+    });
+
+    
     yearMonthDim = facts.dimension(function (d) {
         return new Date(d.received.getFullYear(), d.received.getMonth(), 1 );
     });
@@ -197,6 +228,7 @@ function LoadModel() {
     subIssueGroup		= subIssueDim.group();
     companyGroup		= companyDim.group();    
     yearGroup			= yearDim.group();
+    yearGroup2			= yearDim2.group();
     yearMonthGroup		= yearMonthDim.group();
     monthGroup			= monthDim.group();
     disputedGroup		= disputedDim.group();
@@ -220,7 +252,7 @@ function LoadCharts() {
 	.renderArea(true)
         .margins({top: 10, right: 50, bottom: 30, left: 50})
 	.brushOn(false)
-	.width(990)
+	.width(1022)
 	.height(400);
     
     complaintCountChart
@@ -237,8 +269,8 @@ function LoadCharts() {
 	    return group.top(10);
 	})
     	.elasticX(autoScale)
-	.width(310)
-	.height(40*7)
+	.width(600)
+	.height(320)
     	.xAxis().ticks(5);
     
 
@@ -247,7 +279,7 @@ function LoadCharts() {
 
     complaintsByProductChart.dimension(productDim)
 	.group(productGroup)
-	.width(310)
+	.width(300)
 	.height(40*7)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -262,7 +294,7 @@ function LoadCharts() {
 
     complaintsBySubProductChart.dimension(subProductDim)
 	.group(subProductGroup)
-	.width(310)
+	.width(300)
 	.height(40*7)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -277,7 +309,7 @@ function LoadCharts() {
 
     complaintsByIssueChart.dimension(issueDim)
 	.group(issueGroup)
-	.width(310)
+	.width(300)
 	.height(40*7)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -290,7 +322,7 @@ function LoadCharts() {
     
     complaintsBySubIssueChart.dimension(subIssueDim)
 	.group(subIssueGroup)
-	.width(310)
+	.width(300)
 	.height(40*7)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -305,7 +337,7 @@ function LoadCharts() {
     complaintsByCompanyChart
 	.dimension(companyDim)
 	.group(companyGroup)
-	.width(310)
+	.width(300)
 	.height(350 * 3)
 	.elasticX(autoScale)
 	.data(function (group) {
@@ -322,20 +354,26 @@ function LoadCharts() {
 	.elasticY(autoScale)
 	.x(d3.scale.linear().domain([1,12]))
         .margins({top: 10, right: 50, bottom: 30, left: 50})
-	.width(310)
+	.width(300)
+	.height(20*7);
+
+    complaintsByDisputedChart = dc.pieChart('#chart-by-year')
+	.dimension(yearDim2)
+	.group(yearGroup2)
+	.width(300)
 	.height(20*7);
     
     complaintsByDisputedChart = dc.pieChart('#chart-by-disputed')
 	.dimension(disputedDim)
 	.group(disputedGroup)
-	.width(310)
+	.width(300)
 	.height(20*7);
 
     
     complaintMapChart = dc.geoChoroplethChart("#chart-by-state");
 
     d3.json("data/us-states.json", function (statesJson) {
-	complaintMapChart.width(990)
+	complaintMapChart.width(1022)
             .height(500)
             .dimension(stateDim)
             .group(stateGroup)

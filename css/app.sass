@@ -26,11 +26,11 @@ section
     +span-columns(12)
     height: 40px
 
-  .main
+  #mainChart
     +span-columns(12)
     div
       padding: 10px
-      +span-columns(4)
+      +span-columns(12)
       +media($tablet)
         +span-columns(8)
 
@@ -39,16 +39,32 @@ section
 
   .filters
     +span-columns(12)
-    div
+    #row-chart-count-by-company
       +span-columns(4)
-      h4
-        float: left
-      a
-        float: left
-        margin-left: 7px
-        margin-top: 20px
       +media($tablet)
         +span-columns(8)
 
       +media($mobile)
         +span-columns(4)
+    #other-filters
+      +span-columns(8)
+      +outer-container
+
+      +media($tablet)
+        +span-columns(8)
+
+      +media($mobile)
+        +span-columns(4)
+
+      #productFilters, #issueFilters
+        +span-columns(12)
+        div
+          +span-columns(6)
+
+      #chart-company-response
+        +span-columns(12)
+
+  #monthYearDisputedFilters
+    +span-columns(12)
+    .dc-chart
+      +span-columns(4)
