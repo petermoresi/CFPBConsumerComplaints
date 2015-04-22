@@ -1,6 +1,6 @@
 @import "neat/neat-helpers"; // or "neat-helpers" when in Rails
 
-$visual-grid: true !global;
+$visual-grid: false !global;
 
 $visual-grid-color: lighten(#DDD, 3%);
 
