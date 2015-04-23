@@ -20,8 +20,12 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.3/dc.js"></script>
 
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="CFPBComplaintDashboard.js"></script>
 
+    <script>
+      CFPBConsumerComplainDashboard()
+    </script>
+    
   </head>
   <body>
     <h1>Visualizing the CFPB Consumer Complaints Database</h1>
@@ -31,15 +35,26 @@
       gather complaints from the public and
       <a href="https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD">publish the data online</a>.     </p>
 
+    <ol id="chartList">
+      <li>Bar chart of complaint count by received  (Main chart)</li>
+      <li>Row chart with company responses</li>
+      <li>Row chart count by product</li>
+      <li>Row chart count by issue</li>
+      <li>Pie chart count by year</li>
+      <li>Bar chart count by month</li>
+      <li>Pie chart count by dispute</li>
+    </ol>
+
+    
     <!-- A list of filters for convenience -->
     <div id="cannedFilters" >
       <label>
-	<input onclick="filterPNMAC()" type="checkbox" name="auto-scale-chart-1">PennyMac Only
+	<input onclick="CFPBConsumerComplainDashboard.filterPNMAC()" type="checkbox" name="auto-scale-chart-1">PennyMac Only
       </label>
       <label>
 	<input onclick="toggleAutoScale()" type="checkbox" name="auto-scale-chart-1">Auto Scaling Axis
       </label>
-      <a href="javascript:reset()">Reset</a>
+      <a href="javascript:CFPBConsumerComplainDashboard.reset()">Reset</a>
     </div>
 
     <!-- Contains a text summary of the filters applied to the charts -->
@@ -48,12 +63,12 @@
     
     <!-- The main chart is the focus of your interest -->
     <div id="mainCharts" class="section">
-      <div id="pie-chart-company-response">
+      <div id="chart-company-response">
 	<h2>Company Response</h2>
       </div>
 
       <div id="line-chart-count-by-received">
-	<h2>Complaints by date</h2>
+	<h2>Daily Complaint Volume</h2>
       </div>
     </div>
 
@@ -62,6 +77,10 @@
 
       <div id="pie-chart-by-year">
 	<h2>Year</h2>
+	<div>
+	  <span class="filter"></span>
+	  <a href="javascript:CFPBConsumerComplainDashboard.complaintsByYearChart.filterAll();dc.redrawAll()">Reset</a>
+	</div>
       </div>
 
       <div id="pie-chart-by-month">
@@ -85,6 +104,10 @@
 	<h2>Top Companies</h2>
       </div>
 
+    </div>
+
+    <div id="loading">
+      Loading...<br>
     </div>
 
 

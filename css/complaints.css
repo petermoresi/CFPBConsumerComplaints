@@ -1,6 +1,7 @@
 body {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 2em;
+    margin-right: 2em;
+    max-width: 1024px;
 }
 
 .dc-chart g.row text {
@@ -8,4 +9,24 @@ body {
     cursor: pointer;
     font-weight: 600;
     font-size: 1.1em
+}
+
+
+#loading {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    padding-top: 200px;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    text-align: center;
+}
+
+#chartList {
+    display: none;
+}
+
+#row-chart-count-by-product {
+    clear: both;
 }
