@@ -37,7 +37,7 @@ section#main
         +span-columns(4)
     #chart-by-state
       display: none
-
+    
   .filters
     +span-columns(12)
     #row-chart-count-by-company
@@ -57,7 +57,7 @@ section#main
       +media($mobile)
         +span-columns(4)
 
-      #productFilters, #issueFilters
+      #productFilters, #issueFilters, #monthYearFilters, #responseDisputedFilters
         +span-columns(12)
         div
           +span-columns(6)
@@ -66,20 +66,16 @@ section#main
 
           +media($mobile)
             +span-columns(4)
-              
-      #chart-company-response
-        +span-columns(12)
 
-  #monthYearDisputedFilters
+  #complaintTable
     +span-columns(12)
-    .dc-chart
-      +span-columns(4)
-      +media($tablet)
-        +span-columns(8)
+    th, tr td
+      border: 1px solid #DDD
+      padding: 5px
+    h2
+      margin-top: 10px
 
-      +media($mobile)
-        +span-columns(4)
-
+  
   #footer
     +span-columns(12)
     text-align: center

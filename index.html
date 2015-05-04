@@ -63,7 +63,11 @@
 	    <span class="button-group-item">Only Mortgage</span>
 	  </label>
 	</div>
-	
+
+	<div id="complaint-data-count" class="dc-data-count pull-right">
+	  <span class="filter-count"></span> selected out of <span class="total-count"></span> records
+        </div>	  	
+
       </div>
 
       <!-- Contains a text summary of the filters applied to the charts -->
@@ -73,31 +77,27 @@
       <!-- The main chart is the focus of your interest -->
       <div id="mainCharts" class="section">
 
-	
-	<div id="chart-complaint-volume">
-	  <h2>Complaint Volume</h2>
-	  <div class="button-group">
-	    <label>
-	      <input type="radio" name="complaint-volume-level" value="year">
-	      <span class="button-group-item">Year</span>
-	    </label>
-	    <label>
-	      <input type="radio" name="complaint-volume-level" value="month" checked>
-	      <span class="button-group-item">Month</span>
-	    </label>
-	    <label>
-	      <input type="radio" name="complaint-volume-level" value="day">
-	      <span class="button-group-item">Day</span>
-	    </label>
+	<section id="mainChart">
+	  <div id="chart-complaint-volume">
+	    <h2>Complaint Volume</h2>
+	    <div class="button-group">
+	      <label>
+		<input type="radio" name="complaint-volume-level" value="year">
+		<span class="button-group-item">Year</span>
+	      </label>
+	      <label>
+		<input type="radio" name="complaint-volume-level" value="month" checked>
+		<span class="button-group-item">Month</span>
+	      </label>
+	      <label>
+		<input type="radio" name="complaint-volume-level" value="day">
+		<span class="button-group-item">Day</span>
+	      </label>
+	    </div>
 	  </div>
-	  
-	</div>
-
-	<div id="chart-by-state">
-	  <h2>Complaint Volume % By State</h2>
-	</div>
-	
+	</section>
       </div>
+
 
       <!-- The fitler charts are for AdHoc queries and only displayed on 1024px or greater screen resolution -->
       <div id="filterCharts" class="filters">
@@ -106,7 +106,17 @@
 	  <h2>Top 50 Companies</h2>
 	</div>
 	<div id="other-filters">
+	  <div id="monthYearFilters">
+	    <div id="chart-by-year">
+	      <h2>Count by Year</h2>
+	    </div>
+
+	    <div id="chart-by-month">
+	      <h2>Count by Month</h2>
+	    </div>
+	  </div>
 	  <div id="productFilters">
+
 	    <div id="chart-by-product">
 	      <h2>Top 7 Products</h2>
 	    </div>
@@ -126,25 +136,22 @@
 	    </div>
 	  </div>
 
-	  <div id="chart-company-response">
-	    <h2>Company Response</h2>
+	  <div id="responseDisputedFilters">
+	    <div id="chart-company-response">
+	      <h2>Company Response</h2>
+	    </div>
+
+	    <div id="chart-by-disputed">
+	      <h2>Disputed?</h2>
+	    </div>
 	  </div>
+
 	</div>
       </div>
-      
-      <div id="monthYearDisputedFilters">
-	<div id="chart-by-year">
-	  <h2>Count by Year</h2>
-	</div>
 
-	<div id="chart-by-month">
-	  <h2>Count by Month</h2>
-	</div>
-	
-	<div id="chart-by-disputed">
-	  <h2>Disputed?</h2>
-	</div>
 
+      <div id='complaintTable'>
+	<h2>Top 100 Complaints (By Received Desc)</h2>
       </div>
 
       <div id="footer">

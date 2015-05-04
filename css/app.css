@@ -363,7 +363,7 @@ th {
   padding: 0; }
 
 div.dc-chart {
-  float: left; }
+  /*float: left*/ }
 
 .dc-chart rect.bar {
   stroke: none;
@@ -638,6 +638,10 @@ div.dc-chart {
   margin-top: 10px; }
   .dc-chart h2 {
     text-align: center; }
+
+#complaint-data-count {
+  border: none;
+  text-align: right; }
 
 .dc-chart g.row text {
   fill: black;
@@ -938,73 +942,48 @@ section#main {
           width: 100%; }
           section#main .filters #other-filters:last-child {
             margin-right: 0; } }
-      section#main .filters #other-filters #productFilters, section#main .filters #other-filters #issueFilters {
+      section#main .filters #other-filters #productFilters, section#main .filters #other-filters #issueFilters, section#main .filters #other-filters #monthYearFilters, section#main .filters #other-filters #responseDisputedFilters {
         float: left;
         display: block;
         margin-right: 2.12766%;
         width: 100%; }
-        section#main .filters #other-filters #productFilters:last-child, section#main .filters #other-filters #issueFilters:last-child {
+        section#main .filters #other-filters #productFilters:last-child, section#main .filters #other-filters #issueFilters:last-child, section#main .filters #other-filters #monthYearFilters:last-child, section#main .filters #other-filters #responseDisputedFilters:last-child {
           margin-right: 0; }
-        section#main .filters #other-filters #productFilters div, section#main .filters #other-filters #issueFilters div {
+        section#main .filters #other-filters #productFilters div, section#main .filters #other-filters #issueFilters div, section#main .filters #other-filters #monthYearFilters div, section#main .filters #other-filters #responseDisputedFilters div {
           float: left;
           display: block;
           margin-right: 2.12766%;
           width: 48.93617%; }
-          section#main .filters #other-filters #productFilters div:last-child, section#main .filters #other-filters #issueFilters div:last-child {
+          section#main .filters #other-filters #productFilters div:last-child, section#main .filters #other-filters #issueFilters div:last-child, section#main .filters #other-filters #monthYearFilters div:last-child, section#main .filters #other-filters #responseDisputedFilters div:last-child {
             margin-right: 0; }
           @media screen and (max-width: 768px) {
-            section#main .filters #other-filters #productFilters div, section#main .filters #other-filters #issueFilters div {
+            section#main .filters #other-filters #productFilters div, section#main .filters #other-filters #issueFilters div, section#main .filters #other-filters #monthYearFilters div, section#main .filters #other-filters #responseDisputedFilters div {
               float: left;
               display: block;
               margin-right: 3.22581%;
               width: 48.3871%; }
-              section#main .filters #other-filters #productFilters div:last-child, section#main .filters #other-filters #issueFilters div:last-child {
+              section#main .filters #other-filters #productFilters div:last-child, section#main .filters #other-filters #issueFilters div:last-child, section#main .filters #other-filters #monthYearFilters div:last-child, section#main .filters #other-filters #responseDisputedFilters div:last-child {
                 margin-right: 0; } }
           @media screen and (max-width: 480px) {
-            section#main .filters #other-filters #productFilters div, section#main .filters #other-filters #issueFilters div {
+            section#main .filters #other-filters #productFilters div, section#main .filters #other-filters #issueFilters div, section#main .filters #other-filters #monthYearFilters div, section#main .filters #other-filters #responseDisputedFilters div {
               float: left;
               display: block;
               margin-right: 6.66667%;
               width: 100%; }
-              section#main .filters #other-filters #productFilters div:last-child, section#main .filters #other-filters #issueFilters div:last-child {
+              section#main .filters #other-filters #productFilters div:last-child, section#main .filters #other-filters #issueFilters div:last-child, section#main .filters #other-filters #monthYearFilters div:last-child, section#main .filters #other-filters #responseDisputedFilters div:last-child {
                 margin-right: 0; } }
-      section#main .filters #other-filters #chart-company-response {
-        float: left;
-        display: block;
-        margin-right: 2.12766%;
-        width: 100%; }
-        section#main .filters #other-filters #chart-company-response:last-child {
-          margin-right: 0; }
-  section#main #monthYearDisputedFilters {
+  section#main #complaintTable {
     float: left;
     display: block;
     margin-right: 2.12766%;
     width: 100%; }
-    section#main #monthYearDisputedFilters:last-child {
+    section#main #complaintTable:last-child {
       margin-right: 0; }
-    section#main #monthYearDisputedFilters .dc-chart {
-      float: left;
-      display: block;
-      margin-right: 2.12766%;
-      width: 31.91489%; }
-      section#main #monthYearDisputedFilters .dc-chart:last-child {
-        margin-right: 0; }
-      @media screen and (max-width: 768px) {
-        section#main #monthYearDisputedFilters .dc-chart {
-          float: left;
-          display: block;
-          margin-right: 3.22581%;
-          width: 100%; }
-          section#main #monthYearDisputedFilters .dc-chart:last-child {
-            margin-right: 0; } }
-      @media screen and (max-width: 480px) {
-        section#main #monthYearDisputedFilters .dc-chart {
-          float: left;
-          display: block;
-          margin-right: 6.66667%;
-          width: 100%; }
-          section#main #monthYearDisputedFilters .dc-chart:last-child {
-            margin-right: 0; } }
+    section#main #complaintTable th, section#main #complaintTable tr td {
+      border: 1px solid #DDD;
+      padding: 5px; }
+    section#main #complaintTable h2 {
+      margin-top: 10px; }
   section#main #footer {
     float: left;
     display: block;

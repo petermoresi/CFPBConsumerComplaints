@@ -17,6 +17,7 @@ var data,
     monthDim,
     yearDim,
     yearDim2,
+    tableDim,
     yearMonthDim;
 
 var minDate, minYear, maxDate, maxYear;
@@ -210,7 +211,6 @@ function LoadModel() {
     });
     
     facts = crossfilter(data);
-    
     companyDim = facts.dimension(dc.pluck('Company'));
     companyResponseDim = facts.dimension(dc.pluck('Company response'));
     disputedDim = facts.dimension(dc.pluck("Consumer disputed?"));
@@ -222,11 +222,15 @@ function LoadModel() {
     });
 
     yearDim = facts.dimension(function (d) {
-        return new Date(d.received.getFullYear(), 1, 1 );
+        return new Date(d.received.getFullYear(), 0, 1 );
     });
 
     yearDim2 = facts.dimension(function (d) {
         return d.received.getFullYear();
+    });
+
+    tableDim = facts.dimension(function (d) {
+        return d.received;
     });
 
     
@@ -242,11 +246,6 @@ function LoadModel() {
     subProductDim = facts.dimension(dc.pluck("Sub-product"));
     timelyDim = facts.dimension(dc.pluck("Timely response?"));
 
-    minDate = receivedDim.bottom(1)[0].received;
-    minYear = minDate.getFullYear();
-    maxDate = receivedDim.top(1)[0].received;
-    maxYear = maxDate.getFullYear();
-
     recieveGroup		= receivedDim.group();
     companyResponseGroup	= companyResponseDim.group();
     productGroup		= productDim.group();
@@ -261,12 +260,28 @@ function LoadModel() {
     disputedGroup		= disputedDim.group();
     stateGroup                  = stateDim.group();
 
+    LoadMinMaxDate();
+
     return facts;
+}
+
+function LoadMinMaxDate() {
+    minDate = receivedDim.bottom(1)[0].received;
+    minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+    minYear = minDate.getFullYear();
+    maxDate = receivedDim.top(1)[0].received;
+    maxDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), 0);
+    maxYear = maxDate.getFullYear();
 }
 
 
 // load the charts into some spiffy looking charts
 function LoadCharts() {
+
+    // count all the facts
+    dc.dataCount(".dc-data-count")
+	.dimension(facts)
+	.group(facts.groupAll());
 
 
     // Show Complaint Volume (Default to by month)
@@ -275,7 +290,6 @@ function LoadCharts() {
 	.group(yearMonthGroup)
 	.x(d3.time.scale().domain([minDate,maxDate]))
 	.elasticY(autoScale)
-    	.elasticX(autoScale)
 	.renderArea(true)
         .margins({top: 10, right: 50, bottom: 30, left: 50})
 	.brushOn(false)
@@ -288,6 +302,41 @@ function LoadCharts() {
 
     complaintCountChart.yAxis().ticks(5);
 
+    var complaintTable = dc.dataTable('#complaintTable');
+
+    complaintTable.dimension(tableDim)
+        // data table does not use crossfilter group but rather a closure
+        // as a grouping function
+        .group(function (d) {
+            var format = d3.format('02d');
+            return d.received.getFullYear() + '/' + format((d.received.getMonth() + 1));
+        })
+        .size(100) // (optional) max number of records to be shown, :default = 25
+        // There are several ways to specify the columns; see the data-table documentation.
+        // This code demonstrates generating the column header automatically based on the columns.
+        .columns([
+            'Complaint ID',
+	    {
+                label: 'Received', // desired format of column name 'Change' when used as a label with a function.
+                format: function (d) {
+		    return (d.received.getMonth() + 1) + '/' + d.received.getDate()  + '/' + d.received.getFullYear();
+                }
+            },
+            'Company',
+            'Company response',
+	    'State',
+            'Sub-product',
+            'Issue',
+	    'Submitted via',
+	    'Timely response?'
+        ])
+
+        // (optional) sort using the given field, :default = function(d){return d;}
+        .sortBy(function (d) {
+            return d.received;
+        })
+        // (optional) sort order, :default ascending
+        .order(d3.descending);
 
     companyResponseChart = dc.rowChart("#chart-company-response");
     
@@ -298,7 +347,7 @@ function LoadCharts() {
 	    return group.top(10);
 	})
     	.elasticX(autoScale)
-	.width(600)
+	.width(300)
 	.height(320)
     	.xAxis().ticks(5);
     
@@ -367,7 +416,7 @@ function LoadCharts() {
 	.dimension(companyDim)
 	.group(companyGroup)
 	.width(300)
-	.height(350 * 3)
+	.height(1275)
 	.elasticX(autoScale)
 	.data(function (group) {
 	    return group.top(50);
@@ -391,44 +440,20 @@ function LoadCharts() {
     complaintsByYearChart.dimension(yearDim2)
 	.group(yearGroup2)
 	.width(300)
-	.height(20*7);
+	.height(20*7)
+	.on('filtered', function(chart){
+	    LoadMinMaxDate();
+	    complaintCountChart.x(d3.time.scale().domain([minDate,maxDate]));
+	    complaintCountChart.render();
+	});
     
     complaintsByDisputedChart = dc.pieChart('#chart-by-disputed');
     
     complaintsByDisputedChart.dimension(disputedDim)
 	.group(disputedGroup)
 	.width(300)
-	.height(20*7);
+	.height(320);
 
-    /*
-    complaintMapChart = dc.geoChoroplethChart("#chart-by-state");
-
-    d3.json("data/us-states.json", function (statesJson) {
-	complaintMapChart.width(400)
-            .height(500)
-            .dimension(stateDim)
-            .group(stateGroup)
-	    .valueAccessor(function(d){
-		// convert to percentage of total
-		return 100 * (d.value / receivedDim.top(Number.POSITIVE_INFINITY).length); 
-	    }) 
-            .colors(d3.scale.quantize().range(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"]
-					     ))
-            .colorDomain( [0, 10] )
-            .colorCalculator(function (d) { return d ? complaintMapChart.colors()(d) : '#ccc'; })
-            .overlayGeoJson(statesJson.features, "state", function (d) {
-                return d.properties.name;
-            })
-            .title(function (d) {
-                return "State: " + d.key + "\nPercentage: " + (d.value ? d.value.toFixed(1) : 0)  + "%";
-            });
-
-
-	
-
-    });
-    */
-    
     resizeAll();
     d3.select("#loading").style("display", "none");
 }
