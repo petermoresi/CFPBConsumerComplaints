@@ -80,7 +80,7 @@ function resizeAll() {
 }
 
 //d3.csv("data/Consumer_Complaints.csv", function(result) {
-d3.csv("https://data.consumerfinance.gov/api/views/x94z-ydhh/rows.csv?accessType=DOWNLOAD", function(result) {
+d3.csv("https://data.consumerfinance.gov/views/s6ew-h6mp/rows.csv", function(result) {
     data = result;
     LoadEvents();
     LoadModel();
